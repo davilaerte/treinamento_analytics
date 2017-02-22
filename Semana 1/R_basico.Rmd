@@ -429,4 +429,42 @@ following two lines of code and run them.
 # library(knitr)
 ```
 
+## Variaveis de Fator
 
+```{r}
+# carrega dados do reddit
+setwd('/home/davilaerte/Downloads')
+reddit <- read.csv('reddit.csv')
+
+# sumariza tipos de dados do reddit.
+str(reddit)
+
+# variavel de Fator, é uma variavel de categoria com diferentes niveis.
+
+# para ver os levels de uma variavel.
+
+levels(reddit$age.range)
+
+```
+
+Grafico de uma variavel fator
+```{r GraficoVariavelFator, include=TRUE}
+setwd('/home/davilaerte/Downloads')
+reddit <- read.csv('reddit.csv')
+
+
+# importa pacotes
+library(ggplot2)
+
+# plota o grafico
+qplot(data = reddit, x = age.range)
+
+# define uma ordem para uma variavel de fato, no caso age.range.
+reddit$age.range <- ordered(reddit$age.range, levels = c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above"))
+
+# outra forma
+reddit$age.range <- factor(reddit$age.range, levels = c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above"), ordered = T)
+
+# plota o grafico ordenado
+qplot(data = reddit, x = age.range)
+```
