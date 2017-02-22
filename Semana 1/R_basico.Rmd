@@ -430,5 +430,3 @@ following two lines of code and run them.
 ```
 
 
-# CONGRATULATIONS
-#### You'll be exploring data soon with your new knowledge of R.

@@ -666,6 +666,8 @@ ligthCars</code></pre>
 <pre class="r"><code>mtcars$year &lt;- c(1973, 1974)</code></pre>
 <p>Open the table of values to see what values year takes on.</p>
 <p>Drop the year variable from the data set.</p>
+<pre class="r"><code># Resposta
+mtcars &lt;- subset(mtcars, select = -year)</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>Now you are going to get a preview of ifelse(). For those new to programming this example may be confusing. See if you can understand the code by running the commands one line at a time. Read the output and make sense of what the code is doing at each step.</li>
 </ol>
@@ -699,14 +701,9 @@ mtcars$weight_class</code></pre>
 rm(efficient)</code></pre>
 <p>Save this file if you haven’t done so yet.</p>
 <p>You’ll have the opportunity to create one Rmd file for the final project in this class and submit the Rmd file and knitted output (or HTML file). You’ll need the knitr package to do that so let’s install that now. <strong>Uncomment</strong> the following two lines of code and run them.</p>
-<pre class="r"><code># install.packages('knitr', dependencies = T)
+<pre class="r"><code># feito
+# install.packages('knitr', dependencies = T)
 # library(knitr)</code></pre>
-</div>
-<div id="congratulations" class="section level1">
-<h1>CONGRATULATIONS</h1>
-<div id="youll-be-exploring-data-soon-with-your-new-knowledge-of-r." class="section level4">
-<h4>You’ll be exploring data soon with your new knowledge of R.</h4>
-</div>
 </div>
 
 
