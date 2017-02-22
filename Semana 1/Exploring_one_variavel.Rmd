@@ -1,0 +1,30 @@
+---
+title: "Exploring_one_variavel.Rmd"
+author: "Davi Laerte"
+date: "22 de fevereiro de 2017"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Trabalhando com dados do Facebook
+
+
+```{r dadosFacebook, echo=TRUE, message=FALSE}
+# le dados do facebook
+setwd('/home/davilaerte/Downloads')
+dados <- read.csv('pseudo_facebook.tsv', sep = '\t')
+
+# carrega bibliotecas e plota o grafico
+library(ggplot2)
+
+# plota grafico, com escalas de 1 a 31
+qplot(x = dob_day, data = dados, bins = 30) +
+  scale_x_continuous(breaks = 1:31) +
+  facet_wrap(~dob_month, ncol = 3)
+
+```
+
+
