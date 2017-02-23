@@ -21,10 +21,55 @@ dados <- read.csv('pseudo_facebook.tsv', sep = '\t')
 library(ggplot2)
 
 # plota grafico, com escalas de 1 a 31
-qplot(x = dob_day, data = dados, bins = 30) +
-  scale_x_continuous(breaks = 1:31) +
+qplot(x = as.factor(dob_day), data = dados) +
+  scale_x_discrete(breaks = 1:31) +
   facet_wrap(~dob_month, ncol = 3)
 
 ```
+
+## Contagem de Amigos
+
+```{r}
+qplot(x = friend_count, data = dados)
+
+```
+
+## Limitando os eixos
+
+```{r}
+# uma forma
+qplot(x = friend_count, data = dados, xlim = c(0,1000))
+
+# outra forma
+qplot(x = friend_count, data = dados) +
+  scale_x_continuous(limits = c(0, 1000))
+
+```
+
+## ajustando largura e altura
+
+```{r}
+# ajusta largura e altura.
+qplot(x = friend_count, data = dados, binwidth = 25) +
+  scale_x_continuous(limits = c(0, 1000), breaks = seq(0,1000,50))
+
+# numero de amigos por genero.
+qplot(x = friend_count, data = dados, binwidth = 25) +
+  scale_x_continuous(limits = c(0, 1000), breaks = seq(0,1000,50)) +
+  facet_wrap(~gender)
+
+# numero de amigos por genero, sem N/A.
+qplot(x = friend_count, data = subset(dados, !is.na(gender)), binwidth = 25) +
+  scale_x_continuous(limits = c(0, 1000), breaks = seq(0,1000,50)) +
+  facet_wrap(~gender)
+
+# dado uma variavel e uma variavel de categoria, e uma função
+# para cada level da variavel de categoria, usa a função com a
+# primeira variavel.
+by(dados$friend_count, dados$gender, summary)
+
+```
+
+
 
 
