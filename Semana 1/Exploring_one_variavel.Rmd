@@ -30,6 +30,13 @@ qplot(x = as.factor(dob_day), data = dados) +
 ## Contagem de Amigos
 
 ```{r}
+# le dados do facebook
+setwd('/home/davilaerte/Downloads')
+dados <- read.csv('pseudo_facebook.tsv', sep = '\t')
+
+# carrega bibliotecas e plota o grafico
+library(ggplot2)
+
 qplot(x = friend_count, data = dados)
 
 ```
@@ -71,5 +78,44 @@ by(dados$friend_count, dados$gender, summary)
 ```
 
 
+## dias de uso do Facebook
+
+```{r}
+# le dados do facebook
+setwd('/home/davilaerte/Downloads')
+dados <- read.csv('pseudo_facebook.tsv', sep = '\t')
+
+# carrega bibliotecas e plota o grafico
+library(ggplot2)
+
+# plota grafico com dias de uso do facebook, por usuario
+qplot(x = tenure , data = dados, binwidth = 30, color = I('black'), fill = I('#099DD9'))
+
+# plota grafico com anos de uso do facebook, por usuario
+qplot(x = tenure/365 , data = dados, binwidth = .25,
+        xlab = 'Numero de anos usando o Facebook',
+        ylab = 'Numero de usuarios da Amostra',
+        color = I('black'), fill = I('#B8860B')) +
+    scale_x_continuous(breaks = seq(0,7,1), limits = c(0,7))
+
+```
+
+## idades de quem usa o Facebook
+
+```{r}
+setwd('/home/davilaerte/Downloads')
+dados <- read.csv('pseudo_facebook.tsv', sep = '\t')
+
+# carrega bibliotecas e plota o grafico
+library(ggplot2)
+
+# plota grafico com as idades dos usarios.
+qplot(x = age, data = dados, binwidth = 1,
+      xlab = 'Idade dos usuarios',
+      ylab = 'Numero de usuarios da Amostra',
+       color = I('black'),
+      fill = I('#228B22')) +
+  scale_x_continuous(breaks = seq(0,115,5))
+```
 
 
