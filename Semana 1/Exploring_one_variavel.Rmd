@@ -30,12 +30,6 @@ qplot(x = as.factor(dob_day), data = dados) +
 ## Contagem de Amigos
 
 ```{r}
-# le dados do facebook
-setwd('/home/davilaerte/Downloads')
-dados <- read.csv('pseudo_facebook.tsv', sep = '\t')
-
-# carrega bibliotecas e plota o grafico
-library(ggplot2)
 
 qplot(x = friend_count, data = dados)
 ```
@@ -65,7 +59,7 @@ qplot(x = friend_count, data = dados, binwidth = 25) +
   facet_wrap(~gender)
 
 # numero de amigos por genero, sem N/A.
-qplot(x = friend_count, data = subset(dados, !is.na(gender)), binwidth = 25) +
+ +
   scale_x_continuous(limits = c(0, 1000), breaks = seq(0,1000,50)) +
   facet_wrap(~gender)
 
@@ -80,13 +74,6 @@ by(dados$friend_count, dados$gender, summary)
 ## dias de uso do Facebook
 
 ```{r}
-# le dados do facebook
-setwd('/home/davilaerte/Downloads')
-dados <- read.csv('pseudo_facebook.tsv', sep = '\t')
-
-# carrega bibliotecas e plota o grafico
-library(ggplot2)
-
 # plota grafico com dias de uso do facebook, por usuario
 qplot(x = tenure , data = dados, binwidth = 30, color = I('black'), fill = I('#099DD9'))
 
@@ -102,12 +89,6 @@ qplot(x = tenure/365 , data = dados, binwidth = .25,
 ## idades de quem usa o Facebook
 
 ```{r}
-setwd('/home/davilaerte/Downloads')
-dados <- read.csv('pseudo_facebook.tsv', sep = '\t')
-
-# carrega bibliotecas e plota o grafico
-library(ggplot2)
-
 # plota grafico com as idades dos usarios.
 qplot(x = age, data = dados, binwidth = 1,
       xlab = 'Idade dos usuarios',
@@ -120,12 +101,6 @@ qplot(x = age, data = dados, binwidth = 1,
 ## trasformando dados
 
 ```{r}
-setwd('/home/davilaerte/Downloads')
-dados <- read.csv('pseudo_facebook.tsv', sep = '\t')
-
-# carrega bibliotecas e plota o grafico
-library(ggplot2)
-
 # grafico normal
 qplot(x = friend_count, data = dados)
 
@@ -145,4 +120,28 @@ ggplot(aes(x = friend_count), data = dados) + geom_histogram() + scale_x_log10()
 ggplot(aes(x = friend_count), data = dados) + geom_histogram() + scale_x_sqrt()
 ```
 
+
+## graficos de caixa
+
+```{r}
+# grafico de caixa
+qplot(x = gender, y = friend_count, data = subset(dados, !is.na(gender), geom = 'boxplot'))
+
+# gradico caixa, amizades inicializadas
+qplot(x = gender, y = friendships_initiated, data = subset(dados, !is.na(gender), geom = 'boxplot')) + 
+  coord_cartesian(ylim = c(0,150))
+
+```
+
+## transformado dados para boolean
+
+```{r}
+mobile_check_int <- NA
+dados$mobile_check_in <- ifelse(dados$mobile_likes > 0, 1, 0)
+dados$mobile_check_in <- factor(dados$mobile_check_in)
+summary(dados$mobile_check_in)
+
+# porcetagem de usuarios que já usaram o facebook mobile
+sum(dados$mobile_check_in == 1)/length(dados$mobile_check_in)
+```
 

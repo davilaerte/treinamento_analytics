@@ -449,13 +449,6 @@ levels(reddit$age.range)
 
 Grafico de uma variavel fator
 ```{r GraficoVariavelFator, include=TRUE}
-setwd('/home/davilaerte/Downloads')
-reddit <- read.csv('reddit.csv')
-
-
-# importa pacotes
-library(ggplot2)
-
 # plota o grafico
 qplot(data = reddit, x = age.range)
 
