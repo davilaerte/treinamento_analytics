@@ -1,0 +1,53 @@
+---
+title: "Exploring_one_variavel.Rmd"
+author: "Davi Laerte"
+date: "22 de fevereiro de 2017"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## grafico do preco dos diamantes
+
+```{r}
+library(ggplot2)
+
+qplot(x = diamonds$price, data = diamonds)
+```
+
+## grafico preco com corte dos diamantes
+
+```{r}
+qplot(x = diamonds$price, data = subset(diamonds, !is.na(diamonds$price)), binwidth = 30) +   scale_x_continuous(limits = c(0,15000), breaks = seq(0,15000,1000) ) +
++   facet_wrap(~cut)
+```
+
+## grafico preco por quilate com corte dos diamantes
+
+```{r}
+qplot(x = log10(price), y = carat, data = diamonds) + facet_wrap(~cut, scales = "free_y")
+```
+
+## grafico caixa de preco por variaves dos diamantes
+ 
+ 
+```{r}
+# com cut
+qplot(x = price, y = cut, data = diamonds, geom = 'boxplot')
+
+# com color
+qplot(x = price, y = color, data = diamonds, geom = 'boxplot')
+
+# com clarity
+qplot(x = price, y = color, data = diamonds, geom = 'boxplot')
+```
+
+## grafico caixa preco por quilate com cor
+
+```{r}
+ qplot(x = price, y = carat, data = diamonds, geom = 'boxplot', binwidth = 20) +
++  facet_wrap(~color)
+```
+
