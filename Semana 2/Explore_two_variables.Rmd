@@ -25,5 +25,21 @@ ggplot(aes(x = age, y = friend_count), data = dados) + geom_point()
 # plot com limite do eixo x
 ggplot(aes(x = age, y = friend_count), data = dados) + geom_point() +
   xlim(13, 90)
+
+# plot com ...
+ggplot(aes(x = age, y = friend_count), data = dados) + 
+  geom_point(alpha = 1/20) +
+  xlim(13, 90)
+
+# plot com geom_jitter
+ggplot(aes(x = age, y = friend_count), data = dados) + 
+  geom_jitter(alpha = 1/20) +
+  xlim(13, 90)
+
+# plot com geom_jitter, trasformando eixo y
+ggplot(aes(x = age, y = friend_count), data = dados) + 
+  geom_point(alpha = 1/20, position = position_jitter(h = 0)) +
+  xlim(13, 90) +
+  coord_trans(y = 'sqrt')    
 ```
 
