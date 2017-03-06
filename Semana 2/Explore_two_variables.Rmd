@@ -1,0 +1,29 @@
+---
+title: "Explore_two_variables"
+author: "Davi Laerte"
+date: "3 de março de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## duas variaveis
+
+```{r}
+setwd('/home/davilaerte/Downloads')
+dados <- read.csv('pseudo_facebook.tsv', sep = '\t')
+library(ggplot2)
+
+# plota grafico de ano por amigos
+qplot(x = age, y = friend_count, data = dados)
+
+# outro modo
+ggplot(aes(x = age, y = friend_count), data = dados) + geom_point()
+
+# plot com limite do eixo x
+ggplot(aes(x = age, y = friend_count), data = dados) + geom_point() +
+  xlim(13, 90)
+```
+
