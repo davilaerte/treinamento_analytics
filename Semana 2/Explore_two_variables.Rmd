@@ -43,3 +43,23 @@ ggplot(aes(x = age, y = friend_count), data = dados) +
   coord_trans(y = 'sqrt')    
 ```
 
+## alpha and jitter solution
+
+```{r}
+
+# plot grafico de amigos iniciais vs idade.
+ggplot(aes(x = age, y = friendships_initiated), data = dados) + 
+  geom_point(alpha = 1/10) 
+
+# plot grafico de amigos iniciais vs idade, com posição igual a jitter.
+ggplot(aes(x = age, y = friendships_initiated), data = dados) + 
+  geom_point(alpha = 1/10, position = 'jitter') 
+
+# plot grafico de amigos iniciais vs idade, com posição igual a jitter
+# e com trasformação de coordenada.
+ggplot(aes(x = age, y = friendships_initiated), data = dados) + 
+  geom_point(alpha = 1/10, position = position_jitter(h = 0)) +
+  coord_trans(y = 'sqrt')
+
+```
+
