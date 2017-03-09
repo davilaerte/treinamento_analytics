@@ -63,3 +63,28 @@ ggplot(aes(x = age, y = friendships_initiated), data = dados) +
 
 ```
 
+## medias condicionais 
+
+```{r}
+library(dplyr)
+library(ggplot2)
+# cria conjunto de dados agrupados, por grupo.
+age_groups <- group_by(dados, age)
+
+# cria novos dados a partir de um grupo, com novas varivaeis. 
+dados.fc_by_age <- summarise(age_groups, friend_count_mean = mean(friend_count), friend_count_median = median(friend_count), n = n())
+
+# ordena conjunto de dados, por uma variavel. 
+dados.fc_by_age <- arrange(dados.fc_by_age, age)
+
+head(dados.fc_by_age)
+
+# plota grafico de idade por media de amigos, grafico de pontos.
+ggplot(aes(age, friend_count_mean), data = dados.fc_by_age) + geom_point()
+
+
+# plota grafico de idade por media de amigos, grafico de linha.
+ggplot(aes(age, friend_count_mean), data = dados.fc_by_age) + geom_line()
+
+```
+
