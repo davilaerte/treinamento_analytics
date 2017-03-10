@@ -38,8 +38,7 @@ ggplot(aes(x = age, y = friend_count), data = dados) +
 
 # plot com geom_jitter, trasformando eixo y
 ggplot(aes(x = age, y = friend_count), data = dados) + 
-  geom_point(alpha = 1/20, position = position_jitter(h = 0)) +
-  xlim(13, 90) +
+  geom_point(alpha = 1/20, position = position_jitter(h = 0), color = 'orange') +
   coord_trans(y = 'sqrt')    
 ```
 
@@ -60,7 +59,6 @@ ggplot(aes(x = age, y = friendships_initiated), data = dados) +
 ggplot(aes(x = age, y = friendships_initiated), data = dados) + 
   geom_point(alpha = 1/10, position = position_jitter(h = 0)) +
   coord_trans(y = 'sqrt')
-
 ```
 
 ## medias condicionais 
@@ -87,4 +85,57 @@ ggplot(aes(age, friend_count_mean), data = dados.fc_by_age) + geom_point()
 ggplot(aes(age, friend_count_mean), data = dados.fc_by_age) + geom_line()
 
 ```
+
+## sobrepondo graficos
+
+```{r}
+# plot com geom_jitter, trasformando eixo y
+ggplot(aes(x = age, y = friend_count), data = dados) + 
+  geom_point(alpha = 1/20, position = position_jitter(h = 0), color = 'orange') +
+  coord_trans(y = 'sqrt') + 
+  geom_line(stat = 'summary', fun.y = mean) +
+  geom_line(stat = 'summary', fun.y = quantile, fun.args = list(probs = .1), linetype = 2, color = 'blue') + 
+  geom_line(stat = 'summary', fun.y = quantile, fun.args = list(probs = .5), color = 'blue') +
+  geom_line(stat = 'summary', fun.y = quantile, fun.args = list(probs = .9), linetype = 2, color = 'blue')
+```
+
+## correlacoes entre duas variaveis
+
+```{r}
+# calcula a correlação linear entre as variaves, idade e numero de amigos.
+cor.test(dados$age, dados$friend_count, method = 'pearson')
+
+# calcula a correlação linear entre as variaves, idade e numero de amigos
+# para idades menores que 70
+with(subset(dados, age < 70), cor.test(age, friend_count))
+```
+
+
+## criando grafico de dispersão
+
+```{r}
+
+# grafico de curtidas web por curtidas gerais.
+ggplot(aes(x = www_likes_received, y = likes_received), data = dados) + geom_point()
+  
+# grafico com 95% dos dados
+ggplot(aes(x = www_likes_received, y = likes_received), data = dados) + geom_point() + 
+  xlim(0, quantile(dados$www_likes_received, 0.95)) +
+  ylim(0, quantile(dados$likes_received, 0.95))
+
+# grafico com funcção linear
+ggplot(aes(x = www_likes_received, y = likes_received), data = dados) + geom_point() + 
+  xlim(0, quantile(dados$www_likes_received, 0.95)) +
+  ylim(0, quantile(dados$likes_received, 0.95)) +
+  geom_smooth(method = 'lm', color = 'red')
+```
+
+## correlacao forte
+
+```{r}
+# correlacao linear curtidas web e curtidas gerais.
+cor.test(dados$www_likes_received, dados$likes_received)
+```
+
+
 
