@@ -137,5 +137,39 @@ ggplot(aes(x = www_likes_received, y = likes_received), data = dados) + geom_poi
 cor.test(dados$www_likes_received, dados$likes_received)
 ```
 
+## mais cuidado com correlacao forte
+
+```{r}
+library(alr3)
+data(Mitchell)
+
+ggplot(aes(x = Month, y = Temp), data = Mitchell) + geom_point()
+  
+
+cor.test(Mitchell$Month, Mitchell$Temp)
+
+ggplot(aes(x = Month, y = Temp), data = Mitchell) + geom_point() +
+  scale_x_discrete(breaks = seq(0, 203, 12))
+```
+
+## entendendo ruidos
+
+```{r}
+library(dplyr)
+
+dados$age_with_months <- dados$age + (12 - dados$dob_month)/12
+
+age_with_months_groups <- group_by(dados, age_with_months)
+
+dados.fc_by_age_months <- summarise(age_with_months_groups, friend_count_mean = mean(friend_count), friend_count_median = median(friend_count), n = n())
+
+dados.fc_by_age_months <- arrange(dados.fc_by_age_months, age_with_months)
+
+head(dados.fc_by_age_months)
+
+ggplot(aes(x = age_with_months, y = friend_count_mean ), data = subset(dados.fc_by_age_months, age_with_months < 71)) + geom_line() +
+  geom_smooth()
+```
+
 
 
