@@ -1,0 +1,70 @@
+---
+title: "Problem_Set_Explore_Two_Variable"
+author: "Davi Laerte"
+date: "13 de março de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## grafico price vs x
+
+```{r}
+library(ggplot2)
+
+# preco por x
+ggplot(aes(x = x, y = price), data = diamonds) + geom_point()
+```
+
+## correlacoes
+
+```{r}
+
+# correlaçao linear entre preco e x
+cor.test(diamonds$price, diamonds$x)
+
+# correlaçao linear entre preco e y
+cor.test(diamonds$price, diamonds$y)
+
+# correlaçao linear entre preco e z
+cor.test(diamonds$price, diamonds$z)
+```
+
+## grafico preco vs profundidade
+
+```{r}
+# preco por profundidade
+ggplot(aes(x = price, y = depth), data = diamonds) + geom_point() +
+  scale_y_continuous(breaks = seq(0,80,1))
+
+# correlacao preco por profundidade
+cor.test(diamonds$price, diamonds$depth)
+```
+
+## grafico preco vs quilate
+
+```{r}
+# preco por quilate
+ggplot(aes(x = price, y = carat), data = diamonds) + geom_point()
+```
+
+## grafico preco vs volume
+
+```{r}
+# cria variavel volume
+diamonds$volume <- (diamonds$x*diamonds$y*diamonds$z)
+
+# preco por volume
+ggplot(aes(x = price, y = volume), data = diamonds) + geom_point()
+
+# cria subconjunto de dados com valores de volume especificos
+diamonds_alterado <- subset(diamonds, diamonds$volume > 0 & diamonds$volume < 800)
+
+# correlacao de preco por volume, com conjunto de dados especificos
+cor.test(diamonds_alterado$price, diamonds_alterado$volume)
+```
+
+
+
