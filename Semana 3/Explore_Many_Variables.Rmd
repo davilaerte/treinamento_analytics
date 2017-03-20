@@ -1,0 +1,61 @@
+---
+title: "Explore_Many_Variables.Rmd"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## dado multivariavel
+
+```{r}
+setwd('/home/davilaerte/Downloads')
+dados <- read.csv('pseudo_facebook.tsv', sep = '\t')
+library(ggplot2)
+library(dplyr)
+
+dados.fc_by_age_gender <- dados %>%
+  filter(!is.na(gender)) %>%
+  group_by(age, gender) %>%
+  summarise(mean_friend_count = mean(friend_count), median_friend_count = median(friend_count), n = n()) %>%
+  ungroup()%>%
+  arrange(age)
+
+ggplot(aes(x = age, y = median_friend_count), data = dados.fc_by_age_gender) + geom_line(aes(color = gender))
+```
+
+## reformulação de dados
+
+```{r}
+library(reshape2)
+
+dados.fc_by_age_gender.wide <- dcast(dados.fc_by_age_gender, age ~ gender, value.var = 'median_friend_count')
+
+ggplot(aes(x = age, y = female / male), data = dados.fc_by_age_gender.wide) + geom_line() +
+  geom_hline(yintercept = 1, alpha = 0.3, linetype = 2)
+```
+
+## variavel de corte
+
+```{r}
+dados$year_joined <- floor(2014 - (dados$tenure/365))
+
+summary(dados$year_joined)
+
+table(dados$year_joined)
+
+dados$year_joined.bucket <- cut(dados$year_joined, c(2004, 2009, 2011, 2012, 2014))
+
+ggplot(aes(x = age, y = friend_count), data = subset(dados, !is.na(year_joined.bucket))) + geom_line(aes(color = year_joined.bucket), stat = 'summary', fun.y = median)
+
+ggplot(aes(x = age, y = friend_count), data = subset(dados, !is.na(year_joined.bucket))) + geom_line(aes(color = year_joined.bucket), stat = 'summary', fun.y = mean) + 
+  geom_line(stat = 'summary', fun.y = mean, linetype = 2)
+```
+
+## Solução de taxa de amizade
+
+```{r}
+with(subset(dados, tenure >= 1), summary(friend_count / tenure))
+```
+

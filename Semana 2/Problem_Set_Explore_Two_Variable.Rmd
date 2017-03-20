@@ -64,7 +64,29 @@ diamonds_alterado <- subset(diamonds, diamonds$volume > 0 & diamonds$volume < 80
 
 # correlacao de preco por volume, com conjunto de dados especificos
 cor.test(diamonds_alterado$price, diamonds_alterado$volume)
+
+# grafico diamantes, preco por volume, com dados alterados
+# e com modelo linear
+ggplot(aes(x = price, y = volume), data = diamonds_alterado) +
+  geom_point() +
+  geom_smooth()
 ```
 
+## media preco por clareza
 
+```{r}
 
+diamondsByClarityGroup <- group_by(diamonds, clarity)
+
+diamondsByClarity <- summarise(diamondsByClarityGroup, mean_price = mean(price), median_price = median(price), min_price = min(price), max_price = max(price), n = n())
+
+diamonds_by_clarity <- group_by(diamonds, clarity)
+diamonds_mp_by_clarity <- summarise(diamonds_by_clarity, mean_price = mean(price))
+
+diamonds_by_color <- group_by(diamonds, color)
+diamonds_mp_by_color <- summarise(diamonds_by_color, mean_price = mean(price))
+
+ggplot(aes(x = clarity , y = mean_price), data = diamonds_mp_by_clarity) + geom_bar(stat="identity")
+
+ggplot(aes(x = color, y = mean_price), data = diamonds_mp_by_color) + geom_bar(stat="identity")
+```

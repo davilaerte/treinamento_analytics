@@ -167,8 +167,7 @@ dados.fc_by_age_months <- arrange(dados.fc_by_age_months, age_with_months)
 
 head(dados.fc_by_age_months)
 
-ggplot(aes(x = age_with_months, y = friend_count_mean ), data = subset(dados.fc_by_age_months, age_with_months < 71)) + geom_line() +
-  geom_smooth()
+ggplot(aes(x = age_with_months, y = friend_count_mean ), data = subset(dados.fc_by_age_months, age_with_months < 71)) + geom_line() + geom_smooth()
 ```
 
 
